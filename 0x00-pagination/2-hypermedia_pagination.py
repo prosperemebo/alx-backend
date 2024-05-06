@@ -2,7 +2,8 @@
 """ module for server class implementation """
 
 import csv
-from typing import List, Tuple
+from math import ceil
+from typing import List, Tuple, Dict, Any
 
 
 def index_range(page, page_size) -> Tuple[int]:
@@ -50,3 +51,17 @@ class Server:
             return self.dataset()[offset:skip]
         except IndexError:
             return []
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
+        """Get page with infomation"""
+        total_pages = ceil(len(self.dataset()) / page_size)
+        response = {
+            "page_size": page_size,
+            "page": page,
+            "data": self.get_page(page, page_size),
+            "next_page": page + 1 if total_pages > page else None,
+            "prev_page": page - 1 if page > 1 else None,
+            "total_pages": total_pages,
+        }
+
+        return response
