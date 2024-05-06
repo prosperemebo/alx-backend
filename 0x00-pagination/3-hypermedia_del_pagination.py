@@ -35,8 +35,8 @@ class Server:
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """Get specific page with infomation"""
-        assert isinstance(index, int) and index > 0
+        """ Get page at index with information """
+        assert isinstance(index, int) and index >= 0
         assert isinstance(page_size, int) and page_size > 0
 
         response = {
