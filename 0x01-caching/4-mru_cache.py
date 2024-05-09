@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-""" module with implementation of LRUCache class """
+""" module with implementation of MRUCache class """
 
 BaseCaching = __import__("base_caching").BaseCaching
 
 
-class LRUCache(BaseCaching):
-    """LRU caching system that inherits from BaseCaching"""
+class MRUCache(BaseCaching):
+    """MRU caching system that inherits from BaseCaching"""
 
     def __init__(self):
         """Initialize cache instance"""
@@ -17,12 +17,12 @@ class LRUCache(BaseCaching):
         if key and item:
             if self.get(key) != item:
                 self.cache_data[key] = item
+                if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+                    self.cache_data.pop(self.keys[-1])
+                    print("DISCARD:", self.keys[-1])
+                    self.keys.pop(-1)
                 if key not in self.keys:
                     self.keys.append(key)
-                if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                    self.cache_data.pop(self.keys[0])
-                    print("DISCARD:", self.keys[0])
-                    self.keys.pop(0)
 
     def get(self, key):
         """Retrieves an item from the cache."""
